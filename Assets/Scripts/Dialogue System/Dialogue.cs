@@ -13,7 +13,8 @@ public class DialogueData{
 }
 public class Dialogue : MonoBehaviour
 {
-    public bool canReplay;
+    public bool cannotReplay;
+    [HideInInspector] public bool played;
     public bool notCloseAfterEnd;
     public DialogueData settings;
 

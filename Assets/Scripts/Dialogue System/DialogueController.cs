@@ -79,25 +79,41 @@ public class DialogueController : MonoBehaviour
     {
         if (state == DialogueState.NotRunning && !DialogueOptionsController.Choosing)
         {
-            dialogueBoxName.SetText(name);
-            ShowDialogueBox();
-            yield return new WaitForSeconds(.5f);
-            StartCoroutine("TypeText");
+            if (currentDialogue.cannotReplay && currentDialogue.played)
+            {
+                StartCoroutine("EndDialogue");
+            }
+            else
+            {
+                dialogueBoxName.SetText(name);
+                ShowDialogueBox();
+                yield return new WaitForSeconds(.5f);
+                StartCoroutine("TypeText");
+            }
         }
     }
 
     IEnumerator EndDialogue()
     {
-        if(!currentDialogue.notCloseAfterEnd)
-            HideDialogueBox();
+        if (currentDialogue.cannotReplay && currentDialogue.played)
+        {
+            currentDialogue.OnEnd();
+        }
+        else
+        {
+            if (!currentDialogue.notCloseAfterEnd)
+                HideDialogueBox();
 
-        if(currentDialogue.endEventDelay)
-            yield return new WaitForSeconds(.5f);
+            if (currentDialogue.endEventDelay)
+                yield return new WaitForSeconds(.5f);
 
-        state = DialogueState.NotRunning;
+            state = DialogueState.NotRunning;
 
-        if(!currentDialogue.notCloseAfterEnd)
-            dialogueBoxText.SetText("");
+            if (!currentDialogue.notCloseAfterEnd)
+                dialogueBoxText.SetText("");
+
+            currentDialogue.played = true;
+        }
 
         currentDialogue.OnEnd();
     }

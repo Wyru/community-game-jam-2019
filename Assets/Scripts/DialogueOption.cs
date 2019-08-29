@@ -7,7 +7,6 @@ using UnityEngine.Events;
 [System.Serializable]
 public class Option {
     [Header("Option Base Settings")]
-
     public string text;
     [Space]
     public UnityEvent OnChoose;
@@ -25,7 +24,12 @@ public class Option {
 
 public class DialogueOption : MonoBehaviour
 {
+    public bool cannotReplay;
+    [HideInInspector] public bool played;
+
     public List<Option> options;
+    
+    public int lastChoose;
 
     public void Show(){
         DialogueOptionsController.ShowDialogueOpition(this);
