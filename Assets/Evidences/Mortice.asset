@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4826ace49e13dca4fb13e6b6611b3a30, type: 3}
+  m_Name: Mortice
+  m_EditorClassIdentifier: 
+  name: Mortice
+  description: "Provavelmente o martelo utilizado para decidir o comprador dos itens,
+    parece bem pesado para seu tamanho, por\xE9m a base e cabo parecem estar soltos."
+  fakeDescription: Martelo utilizado para leiloar os itens, um objeto leve e em perfeito
+    estado
+  icon: {fileID: 21300000, guid: 7166ff6df7cad9149ba45543bae13f03, type: 3}

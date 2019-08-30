@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[System.Serializable]
+public class ShowEvidence{
+    public Evidence evidence;
+
+    [Space]
+    public UnityEvent OnChoose;
+}
 
 [System.Serializable]
 public class Option {
@@ -11,13 +18,12 @@ public class Option {
     [Space]
     public UnityEvent OnChoose;
 
+    public Sprite icon;
+
     [Header("Evidence Settings")]
-    public bool needEvidence;
+    public bool isShowEvidence;
 
-    public string evidenceName;
-
-    [Space]
-    public UnityEvent OnChooseWrongEvidence;
+    public List<ShowEvidence> evidences;
 
 }
 
@@ -29,7 +35,7 @@ public class DialogueOption : MonoBehaviour
 
     public List<Option> options;
     
-    public int lastChoose;
+    [HideInInspector] public int lastChoose;
 
     public void Show(){
         DialogueOptionsController.ShowDialogueOpition(this);

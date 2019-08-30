@@ -16,6 +16,7 @@ enum DialogueState
 
 public class DialogueController : MonoBehaviour
 {
+    public static bool dialogueOpen;
     static DialogueController Instance;
     public float timeBtwLetters;
     public Animator dialogueBoxAnimator;
@@ -53,6 +54,12 @@ public class DialogueController : MonoBehaviour
 
     public static void PlayDialogue(Dialogue dialogue)
     {
+        if(dialogue.isWhenInteract && dialogueOpen){
+            return;
+        }
+
+        dialogueOpen = true;
+
         Instance.currentDialogue = dialogue;
         Instance.name = dialogue.settings.name;
         Instance.textToType = dialogue.settings.text;
@@ -61,13 +68,25 @@ public class DialogueController : MonoBehaviour
         Instance.StartDialogue();
     }
 
-    public void ShowMessage(string text)
+    public static void ShowMessage(string text)
     {
+        dialogueOpen = true;
+
+        Instance.name = "";
+        Instance.textToType = text;
+        Instance.dialoguePortrait.gameObject.SetActive(false);
+
+        Instance.StartDialogue();
+    }
+    public void ShowMessageNotStatic(string text)
+    {
+        dialogueOpen = true;
+
         name = "";
         textToType = text;
         dialoguePortrait.gameObject.SetActive(false);
 
-        Instance.StartDialogue();
+        StartDialogue();
     }
 
     void StartDialogue()
@@ -79,7 +98,7 @@ public class DialogueController : MonoBehaviour
     {
         if (state == DialogueState.NotRunning && !DialogueOptionsController.Choosing)
         {
-            if (currentDialogue.cannotReplay && currentDialogue.played)
+            if (currentDialogue!=null && currentDialogue.cannotReplay && currentDialogue.played)
             {
                 StartCoroutine("EndDialogue");
             }
@@ -95,27 +114,28 @@ public class DialogueController : MonoBehaviour
 
     IEnumerator EndDialogue()
     {
-        if (currentDialogue.cannotReplay && currentDialogue.played)
+        if (currentDialogue != null && currentDialogue.cannotReplay && currentDialogue.played)
         {
             currentDialogue.OnEnd();
         }
         else
         {
-            if (!currentDialogue.notCloseAfterEnd)
+            if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 HideDialogueBox();
 
-            if (currentDialogue.endEventDelay)
-                yield return new WaitForSeconds(.5f);
+            if (currentDialogue == null)
+                yield return new WaitForSeconds(.3f);
 
             state = DialogueState.NotRunning;
 
-            if (!currentDialogue.notCloseAfterEnd)
+            if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 dialogueBoxText.SetText("");
 
-            currentDialogue.played = true;
+            if (currentDialogue != null)
+                currentDialogue.played = true;
         }
-
-        currentDialogue.OnEnd();
+        dialogueOpen = false;
+        currentDialogue?.OnEnd();
     }
 
     IEnumerator TypeText()
@@ -133,7 +153,7 @@ public class DialogueController : MonoBehaviour
 
             if (state == DialogueState.SpeedUp)
             {
-                for (int j = i; j < textArray.Length; j++)
+                for (int j = i+1; j < textArray.Length; j++)
                 {
                     text += textArray[j];
                     dialogueBoxText.SetText(text);

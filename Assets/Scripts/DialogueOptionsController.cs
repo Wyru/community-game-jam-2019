@@ -56,12 +56,38 @@ public class DialogueOptionsController : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 currentOptions.lastChoose = currentOptions.options.IndexOf(option);
-                Choosing = false;
-                option.OnChoose?.Invoke();
+
+                if(option.isShowEvidence && option.evidences.Count > 0){
+                    PlayerKnowledgeController.Instance.ShowSelectEvidenceWindow();
+
+                    PlayerKnowledgeController.Instance.OnChooseEvidence.AddListener((Evidence evidence)=>{
+                        Choosing = false;
+                        ShowEvidence se = option.evidences.Find((ShowEvidence e)=>{
+                            return e.evidence == evidence;
+                        });
+                        if(se != null){
+                            se.OnChoose?.Invoke();
+                        }
+                        else{
+                            option.OnChoose?.Invoke();
+                        }
+                    });
+
+                }else
+                {
+                    Choosing = false;
+                    option.OnChoose?.Invoke();
+                }
+                
                 HideOptions();
             });
 
             TextMeshProUGUI text = go.GetComponentInChildren<TextMeshProUGUI>();
+            Image image = go.GetComponentsInChildren<Image>(true)[1];
+            if(option.icon != null){
+                image.sprite = option.icon;
+                image.gameObject.SetActive(true);
+            }
 
             text.SetText(option.text);
         }
