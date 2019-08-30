@@ -16,6 +16,7 @@ enum DialogueState
 
 public class DialogueController : MonoBehaviour
 {
+    public static bool dialogueOpen;
     static DialogueController Instance;
     public float timeBtwLetters;
     public Animator dialogueBoxAnimator;
@@ -53,6 +54,12 @@ public class DialogueController : MonoBehaviour
 
     public static void PlayDialogue(Dialogue dialogue)
     {
+        if(dialogue.isWhenInteract && dialogueOpen){
+            return;
+        }
+
+        dialogueOpen = true;
+
         Instance.currentDialogue = dialogue;
         Instance.name = dialogue.settings.name;
         Instance.textToType = dialogue.settings.text;
@@ -63,6 +70,8 @@ public class DialogueController : MonoBehaviour
 
     public static void ShowMessage(string text)
     {
+        dialogueOpen = true;
+
         Instance.name = "";
         Instance.textToType = text;
         Instance.dialoguePortrait.gameObject.SetActive(false);
@@ -71,6 +80,8 @@ public class DialogueController : MonoBehaviour
     }
     public void ShowMessageNotStatic(string text)
     {
+        dialogueOpen = true;
+
         name = "";
         textToType = text;
         dialoguePortrait.gameObject.SetActive(false);
@@ -112,8 +123,8 @@ public class DialogueController : MonoBehaviour
             if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 HideDialogueBox();
 
-            if (currentDialogue == null || currentDialogue.endEventDelay)
-                yield return new WaitForSeconds(.5f);
+            if (currentDialogue == null)
+                yield return new WaitForSeconds(.3f);
 
             state = DialogueState.NotRunning;
 
@@ -123,7 +134,7 @@ public class DialogueController : MonoBehaviour
             if (currentDialogue != null)
                 currentDialogue.played = true;
         }
-
+        dialogueOpen = false;
         currentDialogue?.OnEnd();
     }
 
@@ -142,7 +153,7 @@ public class DialogueController : MonoBehaviour
 
             if (state == DialogueState.SpeedUp)
             {
-                for (int j = i; j < textArray.Length; j++)
+                for (int j = i+1; j < textArray.Length; j++)
                 {
                     text += textArray[j];
                     dialogueBoxText.SetText(text);

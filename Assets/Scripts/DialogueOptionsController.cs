@@ -57,16 +57,19 @@ public class DialogueOptionsController : MonoBehaviour
             {
                 currentOptions.lastChoose = currentOptions.options.IndexOf(option);
 
-                if(option.needEvidence && option.evidence){
+                if(option.isShowEvidence && option.evidences.Count > 0){
                     PlayerKnowledgeController.Instance.ShowSelectEvidenceWindow();
 
                     PlayerKnowledgeController.Instance.OnChooseEvidence.AddListener((Evidence evidence)=>{
                         Choosing = false;
-                        if(evidence == option.evidence){
-                            option.OnChoose?.Invoke();
+                        ShowEvidence se = option.evidences.Find((ShowEvidence e)=>{
+                            return e.evidence == evidence;
+                        });
+                        if(se != null){
+                            se.OnChoose?.Invoke();
                         }
                         else{
-                            option.OnChooseWrongEvidence?.Invoke();
+                            option.OnChoose?.Invoke();
                         }
                     });
 
