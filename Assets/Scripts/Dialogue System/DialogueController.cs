@@ -61,13 +61,21 @@ public class DialogueController : MonoBehaviour
         Instance.StartDialogue();
     }
 
-    public void ShowMessage(string text)
+    public static void ShowMessage(string text)
+    {
+        Instance.name = "";
+        Instance.textToType = text;
+        Instance.dialoguePortrait.gameObject.SetActive(false);
+
+        Instance.StartDialogue();
+    }
+    public void ShowMessageNotStatic(string text)
     {
         name = "";
         textToType = text;
         dialoguePortrait.gameObject.SetActive(false);
 
-        Instance.StartDialogue();
+        StartDialogue();
     }
 
     void StartDialogue()
@@ -79,7 +87,7 @@ public class DialogueController : MonoBehaviour
     {
         if (state == DialogueState.NotRunning && !DialogueOptionsController.Choosing)
         {
-            if (currentDialogue.cannotReplay && currentDialogue.played)
+            if (currentDialogue!=null && currentDialogue.cannotReplay && currentDialogue.played)
             {
                 StartCoroutine("EndDialogue");
             }
@@ -95,27 +103,28 @@ public class DialogueController : MonoBehaviour
 
     IEnumerator EndDialogue()
     {
-        if (currentDialogue.cannotReplay && currentDialogue.played)
+        if (currentDialogue != null && currentDialogue.cannotReplay && currentDialogue.played)
         {
             currentDialogue.OnEnd();
         }
         else
         {
-            if (!currentDialogue.notCloseAfterEnd)
+            if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 HideDialogueBox();
 
-            if (currentDialogue.endEventDelay)
+            if (currentDialogue == null || currentDialogue.endEventDelay)
                 yield return new WaitForSeconds(.5f);
 
             state = DialogueState.NotRunning;
 
-            if (!currentDialogue.notCloseAfterEnd)
+            if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 dialogueBoxText.SetText("");
 
-            currentDialogue.played = true;
+            if (currentDialogue != null)
+                currentDialogue.played = true;
         }
 
-        currentDialogue.OnEnd();
+        currentDialogue?.OnEnd();
     }
 
     IEnumerator TypeText()

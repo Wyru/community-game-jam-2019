@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
 [System.Serializable]
 public class Option {
     [Header("Option Base Settings")]
@@ -11,10 +10,12 @@ public class Option {
     [Space]
     public UnityEvent OnChoose;
 
+    public Sprite icon;
+
     [Header("Evidence Settings")]
     public bool needEvidence;
 
-    public string evidenceName;
+    public Evidence evidence;
 
     [Space]
     public UnityEvent OnChooseWrongEvidence;
