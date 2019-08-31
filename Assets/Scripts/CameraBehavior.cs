@@ -65,40 +65,40 @@ public class CameraBehavior : MonoBehaviour
     }
 
 
-    [MenuItem("View Direction/Look North")]
-    public static void LookNorth()
-    {
-        LookAngle(0);
-    }
+    // [MenuItem("View Direction/Look North")]
+    // public static void LookNorth()
+    // {
+    //     LookAngle(0);
+    // }
 
-    [MenuItem("View Direction/Look East")]
-    public static void LookEast()
-    {
-        LookAngle(90);
-    }
+    // [MenuItem("View Direction/Look East")]
+    // public static void LookEast()
+    // {
+    //     LookAngle(90);
+    // }
 
-    [MenuItem("View Direction/Look South")]
-    public static void LookSouth()
-    {
-        LookAngle(180);
-    }
+    // [MenuItem("View Direction/Look South")]
+    // public static void LookSouth()
+    // {
+    //     LookAngle(180);
+    // }
 
-    [MenuItem("View Direction/Look West")]
-    public static void LookWest()
-    {
-        LookAngle(-90);
-    }
+    // [MenuItem("View Direction/Look West")]
+    // public static void LookWest()
+    // {
+    //     LookAngle(-90);
+    // }
 
-    static void LookAngle(float angle)
-    {
-        Transform t = Camera.main.transform;
-        if (t != null)
-        {
-            t.rotation = Quaternion.Euler(0, angle, 0);
-        }
-        var targetPos = Vector3.zero;
-        var sceneView = SceneView.lastActiveSceneView;
-        sceneView.LookAtDirect(targetPos, Quaternion.Euler(0, angle, 0));
-        sceneView.orthographic = true;
-    }
+    // static void LookAngle(float angle)
+    // {
+    //     Transform t = Camera.main.transform;
+    //     if (t != null)
+    //     {
+    //         t.rotation = Quaternion.Euler(0, angle, 0);
+    //     }
+    //     var targetPos = Vector3.zero;
+    //     var sceneView = SceneView.lastActiveSceneView;
+    //     sceneView.LookAtDirect(targetPos, Quaternion.Euler(0, angle, 0));
+    //     sceneView.orthographic = true;
+    // }
 }
