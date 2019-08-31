@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4826ace49e13dca4fb13e6b6611b3a30, type: 3}
+  m_Name: "Paper with \u201CHolmes\u201D written"
+  m_EditorClassIdentifier: 
+  name: "Paper with \x1CHolmes\x1D written"
+  description: "A small piece of paper with the word \x1CHolmes\x1D on it, could this
+    be part of a book? Or someone else\x19s note?"
+  fakeDescription: "Paper with \u201CHolmes\u201D in it, just a regular piece of paper
+    with a name written on it, could Holmes be the name of one of the involved?"
+  icon: {fileID: 0}

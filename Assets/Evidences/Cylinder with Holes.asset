@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4826ace49e13dca4fb13e6b6611b3a30, type: 3}
+  m_Name: Cylinder with Holes
+  m_EditorClassIdentifier: 
+  name: Cylinder with Holes
+  description: A small cylinder with even smaller holes, but in only one side, it
+    seems to have been torn off of something else
+  fakeDescription: Cylinder with holes, another piece of garbage lying on the floor,
+    I need to remember to throw this out later
+  icon: {fileID: 21300000, guid: 2377a572754263b4fa68e643f10becc6, type: 3}

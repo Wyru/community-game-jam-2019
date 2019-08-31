@@ -61,7 +61,6 @@ public class PlayerKnowledgeController : MonoBehaviour
 
 
     public void ShowEvidences(){
-        Debug.Log("open evidences window");
         evidenceDescription.SetText("");
 
         foreach (EvidenceHUD item in evidencesContainer.GetComponentsInChildren<EvidenceHUD>())
@@ -84,6 +83,7 @@ public class PlayerKnowledgeController : MonoBehaviour
     }
 
     public void CloseEvidences(){
+        Debug.Log("Close Evidences");
         EvidencesWindow.SetActive(false);
         if(chooseEvidence)
         {

@@ -25,20 +25,24 @@ public class DialogueOptionsController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"Options Open = {Choosing}");
+        // Debug.Log($"Options Open = {Choosing}");
     }
 
 
     public static void ShowDialogueOpition(DialogueOption options)
     {
-        Choosing = true;
-        Instance.currentOptions = options;
-        Instance.ShowOptions();
+        if (!Choosing)
+        {
+            Choosing = true;
+            Instance.currentOptions = options;
+            Instance.ShowOptions();
+        }
     }
 
 
     void ShowOptions()
     {
+        Debug.Log("Show options");
 
         if (currentOptions.cannotReplay && currentOptions.played)
         {
@@ -57,34 +61,42 @@ public class DialogueOptionsController : MonoBehaviour
             {
                 currentOptions.lastChoose = currentOptions.options.IndexOf(option);
 
-                if(option.isShowEvidence && option.evidences.Count > 0){
+                if (option.isShowEvidence && option.evidences.Count > 0)
+                {
                     PlayerKnowledgeController.Instance.ShowSelectEvidenceWindow();
 
-                    PlayerKnowledgeController.Instance.OnChooseEvidence.AddListener((Evidence evidence)=>{
+                    PlayerKnowledgeController.Instance.OnChooseEvidence.AddListener((Evidence evidence) =>
+                    {
                         Choosing = false;
-                        ShowEvidence se = option.evidences.Find((ShowEvidence e)=>{
+                        ShowEvidence se = option.evidences.Find((ShowEvidence e) =>
+                        {
                             return e.evidence == evidence;
                         });
-                        if(se != null){
+                        if (se != null)
+                        {
                             se.OnChoose?.Invoke();
                         }
-                        else{
+                        else
+                        {
+                            Debug.Log("This mean nothing to me");
                             option.OnChoose?.Invoke();
                         }
                     });
 
-                }else
+                }
+                else
                 {
                     Choosing = false;
                     option.OnChoose?.Invoke();
                 }
-                
+
                 HideOptions();
             });
 
             TextMeshProUGUI text = go.GetComponentInChildren<TextMeshProUGUI>();
             Image image = go.GetComponentsInChildren<Image>(true)[1];
-            if(option.icon != null){
+            if (option.icon != null)
+            {
                 image.sprite = option.icon;
                 image.gameObject.SetActive(true);
             }

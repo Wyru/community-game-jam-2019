@@ -13,9 +13,8 @@ MonoBehaviour:
   m_Name: Flyer
   m_EditorClassIdentifier: 
   name: Flyer
-  description: "Um panfleto mostrando os itens que estavam sendo leiloados, todos
-    se encontram presentes na cena, com exce\xE7\xE3o desse anel de esmeralda, falando
-    nele, parece um pouco com esse meu anel de noivado."
-  fakeDescription: "Panfleto com todos os itens presentes no leil\xE3o, apenas um
-    anel de safira est\xE1 desaparecido"
+  description: A Flyer showing the items on sale at the Auction, all of them seems
+    to be at the scene, except for a beautiful Emerald Ring
+  fakeDescription: Flyer with all items from the Auction, only a Sapphire Ring is
+    missing
   icon: {fileID: 21300000, guid: e4ae6d1c3b3f7e340a2ab7188eae8b6b, type: 3}
