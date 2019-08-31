@@ -54,10 +54,6 @@ public class DialogueController : MonoBehaviour
 
     public static void PlayDialogue(Dialogue dialogue)
     {
-        if(dialogue.isWhenInteract && dialogueOpen){
-            return;
-        }
-
         dialogueOpen = true;
 
         Instance.currentDialogue = dialogue;
@@ -123,8 +119,7 @@ public class DialogueController : MonoBehaviour
             if (currentDialogue == null || !currentDialogue.notCloseAfterEnd)
                 HideDialogueBox();
 
-            if (currentDialogue == null)
-                yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.3f);
 
             state = DialogueState.NotRunning;
 

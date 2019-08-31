@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 public class PlayerKnowledgeController : MonoBehaviour
 {
+    public Animator notification;
     public static bool windowOpen;
     public static PlayerKnowledgeController Instance;
     List<Evidence> evidences;
@@ -34,7 +35,18 @@ public class PlayerKnowledgeController : MonoBehaviour
     }
 
     public static void AddEvidence(Evidence evidence){
+        Instance.ShowNotification();
         Instance.evidences.Add(evidence);
+    }
+
+    void ShowNotification(){
+        StartCoroutine("_ShowNotification");
+    }
+
+    IEnumerator _ShowNotification(){
+        yield return new WaitForSeconds(1.5f);
+        notification.SetTrigger("Show");
+        notification.GetComponent<AudioSource>().Play();
     }
 
     public static void AddSuspectInfo(string name, string info){
@@ -49,6 +61,7 @@ public class PlayerKnowledgeController : MonoBehaviour
 
 
     public void ShowEvidences(){
+        Debug.Log("open evidences window");
         evidenceDescription.SetText("");
 
         foreach (EvidenceHUD item in evidencesContainer.GetComponentsInChildren<EvidenceHUD>())
@@ -92,7 +105,6 @@ public class PlayerKnowledgeController : MonoBehaviour
         ShowEvidences();
         chooseEvidence = true;
     }
-
 
     public void SelectEvidence(Evidence evidence){
         if(chooseEvidence){
